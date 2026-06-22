@@ -1,0 +1,19 @@
+name = "invoice-summeriser"
+compatibility_date = "2024-06-20"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".next"
+
+# Bind Cloudflare AI (Free tier)
+[ai]
+binding = "AI"
+
+# Bind Cloudflare R2 Storage for Invoices (10GB Free tier)
+[[r2_buckets]]
+binding = "INVOICE_BUCKET"
+bucket_name = "user-invoices"
+
+# Bind Cloudflare D1 SQL Database for Alerts (Free tier)
+[[d1_databases]]
+binding = "DB"
+database_name = "iv-saas-alerts-db"
+database_id = "local-dev"
