@@ -8,11 +8,6 @@ pages_build_output_dir = ".vercel/output/static"
 [ai]
 binding = "AI"
 
-# Bind Cloudflare R2 Storage for Invoices (10GB Free tier)
-[[r2_buckets]]
-binding = "INVOICE_BUCKET"
-bucket_name = "user-invoices"
-
 # Bind Cloudflare D1 SQL Database for Alerts (Free tier)
 [[d1_databases]]
 binding = "DB"
