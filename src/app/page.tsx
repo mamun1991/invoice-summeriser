@@ -44,8 +44,9 @@ export default function Workspace() {
       }
 
       setSummary(data.summary);
-    } catch (err) {
-      setError('Something went wrong!');
+    } catch (err: any) {
+      console.error("Something wrong:", err);
+      setError(err.message || 'Something went wrong!');
     } finally {
       setLoading(false);
     }
