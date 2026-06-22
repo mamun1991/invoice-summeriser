@@ -8,7 +8,6 @@
     "start": "next start",
     "lint": "next lint",
     "preview": "npx @cloudflare/next-on-pages",
-    // "cf:dev": "wrangler pages dev .next --compatibility-flag=nodejs_compat --live-reload"
     "cf:dev": "npm run preview && wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat"
   },
   "dependencies": {
