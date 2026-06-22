@@ -46,9 +46,10 @@ export async function POST(request: NextRequest) {
       summary: aiResponse.response,
     });
 
-  } catch (error) {
+  } catch (error: any) {
+    console.error("AI execution error:", error);
     return NextResponse.json(
-      { error: 'Agent failed to process text' },
+      { error: `Backend crash: ${error.message || error.toString()}` },
       { status: 500 }
     );
   }
