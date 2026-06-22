@@ -1,7 +1,8 @@
 name = "invoice-summeriser"
 compatibility_date = "2024-06-20"
 compatibility_flags = ["nodejs_compat"]
-pages_build_output_dir = ".next"
+pages_build_output_dir = ".vercel/output/static"
+# pages_build_output_dir = ".next"
 
 # Bind Cloudflare AI (Free tier)
 [ai]
