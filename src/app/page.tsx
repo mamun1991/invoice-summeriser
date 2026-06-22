@@ -37,6 +37,12 @@ export default function Workspace() {
         body: JSON.stringify({ text })
       });
 
+      if (!res.ok) {
+        // Read the raw text response instead of JSON
+        const rawErrorText = await res.text(); 
+        throw new Error(`Cloudflare Error: ${rawErrorText}`);
+      }
+
       const data = await res.json();
 
       if (!res.ok) {
