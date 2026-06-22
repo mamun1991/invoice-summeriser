@@ -17,4 +17,4 @@ bucket_name = "user-invoices"
 [[d1_databases]]
 binding = "DB"
 database_name = "iv-saas-alerts-db"
-database_id = "local-dev"
+database_id = "9a69a62a-863b-4906-b09c-952804eb107d"
