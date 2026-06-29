@@ -1,6 +1,5 @@
 interface CloudflareEnv {
   AI: Ai;
-  INVOICE_BUCKET: R2Bucket;
   DB: D1Database;
 }
 
