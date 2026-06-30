@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getRequestContext } from '@cloudflare/next-on-pages';
 
-// Force this route to run on Cloudflare's serverless edge infrastructure
 export const runtime = 'edge';
 
 export async function POST(request: NextRequest) {
   try {
-    // 1. Parse the request body from the frontend
     const { text } = await request.json();
 
     if (!text || typeof text !== 'string') {
@@ -16,16 +14,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // 🛑 Prevent timeouts & memory crashes by limiting text length
+    // LLaMA 3.1 8B can struggle/timeout on free tier with massive inputs.
+    // 5000 characters is roughly 1000-1200 words (a safe limit for quick summaries).
+    const safeText = text.length > 5000 ? text.substring(0, 5000) + '...' : text;
+
     const { env } = getRequestContext();
 
     if (!env.AI) {
       return NextResponse.json(
-        { error: 'AI binding not found. Ensure wrangler.toml is configured correctly.' },
+        { error: 'AI binding not found. Ensure wrangler.toml is configured.' },
         { status: 500 }
       );
     }
 
-    // 3. Command the LLaMA 3.1 AI model (Free tier execution)
+    // 🚀 Updated model ID to the canonical Cloudflare name
     const aiResponse = (await env.AI.run('@cf/meta/llama-3.2-3b-instruct', {
       messages: [
         {
@@ -34,22 +37,22 @@ export async function POST(request: NextRequest) {
         },
         {
           role: 'user',
-          content: text,
+          content: safeText, // Use the truncated text here
         },
       ],
     })) as { response: string };
 
-    // 4. Return the AI's output cleanly back to the client
     return NextResponse.json({
       success: true,
       summary: aiResponse.response,
     });
 
   } catch (error: any) {
-    console.error("AI execution error:", error);
-    console.log("AI execution error::");
+    // If it STILL crashes, these logs will appear in `npx wrangler tail`
+    console.error("AI execution error details:", error);
+    
     return NextResponse.json(
-      { error: `Backend crash: ${error.message || error.toString()}` },
+      { error: `Backend error: ${error.message || 'Unknown error'}` },
       { status: 500 }
     );
   }
