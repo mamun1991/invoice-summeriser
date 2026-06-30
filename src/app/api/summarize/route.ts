@@ -16,7 +16,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 2. Fetch the Cloudflare Environment bindings
     const { env } = getRequestContext();
 
     if (!env.AI) {
@@ -48,6 +47,7 @@ export async function POST(request: NextRequest) {
 
   } catch (error: any) {
     console.error("AI execution error:", error);
+    console.log("AI execution error::");
     return NextResponse.json(
       { error: `Backend crash: ${error.message || error.toString()}` },
       { status: 500 }
