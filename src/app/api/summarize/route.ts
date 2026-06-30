@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 3. Command the LLaMA 3.1 AI model (Free tier execution)
-    const aiResponse = (await env.AI.run('@cf/meta/llama-3-8b-instruct', {
+    const aiResponse = (await env.AI.run('@cf/meta/llama-3.2-3b-instruct', {
       messages: [
         {
           role: 'system',
