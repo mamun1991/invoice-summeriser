@@ -38,17 +38,17 @@ export async function POST(request: NextRequest) {
 
     // 3. Connect to Cloudflare R2 Storage Bucket
     const { env } = getRequestContext();
-    if (!env.INVOICE_BUCKET) {
-      throw new Error('R2 Storage Bucket binding not found in wrangler.toml');
-    }
+    // if (!env.INVOICE_BUCKET) {
+    //   throw new Error('R2 Storage Bucket binding not found in wrangler.toml');
+    // }
 
     // 4. Save the file to the bucket
     const fileId = `invoice_${Date.now()}.pdf`;
     
-    await env.INVOICE_BUCKET.put(fileId, pdfBytes, {
-      httpMetadata: { contentType: 'application/pdf' },
-      customMetadata: { client: clientName }
-    });
+    // await env.INVOICE_BUCKET.put(fileId, pdfBytes, {
+    //   httpMetadata: { contentType: 'application/pdf' },
+    //   customMetadata: { client: clientName }
+    // });
 
     // 5. Return success and the file identifier
     return NextResponse.json({
